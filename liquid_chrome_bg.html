@@ -1,0 +1,69 @@
+<canvas id="liquid-chrome"></canvas>
+
+<style>
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+  }
+
+  #liquid-chrome {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Keeps it in the background */
+  }
+</style>
+
+<script type="module">
+import { Renderer, Program, Mesh, Triangle } from "https://cdn.skypack.dev/ogl";
+
+const canvas = document.getElementById("liquid-chrome");
+const renderer = new Renderer({ dpr: 2, canvas });
+const gl = renderer.gl;
+
+const vertex = `
+  attribute vec2 position;
+  varying vec2 vUv;
+  void main() {
+    vUv = (position + 1.0) * 0.5;
+    gl_Position = vec4(position, 0, 1);
+  }
+`;
+
+const fragment = `
+  precision highp float;
+  uniform float uTime;
+  varying vec2 vUv;
+
+  void main() {
+    float wave = 0.1 * sin(10.0 * vUv.x + uTime) + 0.1 * cos(10.0 * vUv.y + uTime);
+    gl_FragColor = vec4(0.2 + wave, 0.5 + wave, 0.8, 1.0);
+  }
+`;
+
+const program = new Program(gl, {
+  vertex,
+  fragment,
+  uniforms: { uTime: { value: 0 } },
+});
+
+const mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
+
+function resize() {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+window.addEventListener("resize", resize);
+resize();
+
+function update(t) {
+  requestAnimationFrame(update);
+  program.uniforms.uTime.value = t * 0.001;
+  renderer.render({ scene: mesh });
+}
+requestAnimationFrame(update);
+</script>
