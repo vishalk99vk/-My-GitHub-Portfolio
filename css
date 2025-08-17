@@ -1,0 +1,13 @@
+/* Card description glow */
+.card p {
+    color: #ddd;
+    text-shadow: 0 0 2px #fff;
+    animation: descGlow 3s ease-in-out infinite;
+}
+
+/* Subtle pulse animation for descriptions */
+@keyframes descGlow {
+    0% { text-shadow: 0 0 2px #fff, 0 0 5px #aaa; }
+    50% { text-shadow: 0 0 4px #fff, 0 0 10px #aaa; }
+    100% { text-shadow: 0 0 2px #fff, 0 0 5px #aaa; }
+}
