@@ -1,14 +1,41 @@
 import streamlit as st
 
-# ---------------- CONFIG ----------------
-st.set_page_config(page_title="Vishal Kumar | Portfolio", layout="wide")
+# -----------------------------
+# SETTINGS
+# -----------------------------
+TITLE = "🚀 My Streamlit Portfolio"
+DESCRIPTION = "Hi, I'm Vishal 👋 A passionate developer and AI specialist. Here are my deployed Streamlit projects."
 
-# ---------------- CUSTOM CSS ----------------
+# ✅ Only Streamlit apps (manually added)
+STREAMLIT_APPS = {
+    "All-Image-Type-To-JPEG": {
+        "url": "https://all-image-type-to-jpeg-hgvbtewplye9h67bdq77kw.streamlit.app/",
+        "description": "Convert any image format into JPEG seamlessly."
+    },
+    "CGC-": {
+        "url": "https://psldcqtszimyzo8nucxxbm.streamlit.app/",
+        "description": "CGC Project - AI-powered processing."
+    },
+    "Match-CGC-files": {
+        "url": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
+        "description": "Smart file matcher for CGC datasets."
+    },
+    # Add more here...
+}
+
+# -----------------------------
+# STREAMLIT CONFIG
+# -----------------------------
+st.set_page_config(page_title="Streamlit Portfolio", layout="wide")
+
+# -----------------------------
+# CUSTOM CSS (Background + Glass Banner + Cards)
+# -----------------------------
 st.markdown("""
     <style>
-    /* Background animation */
+    /* Gradient background */
     body {
-        background: linear-gradient(-45deg, #1e1e2f, #232946, #16161a, #0f0f0f);
+        background: linear-gradient(135deg, #1e1e2f, #2c3e50, #34495e, #1c1c1c);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
         color: white;
@@ -19,94 +46,101 @@ st.markdown("""
         100% {background-position: 0% 50%;}
     }
 
-    /* Center Title */
-    .main-title {
-        font-size: 42px;
-        font-weight: bold;
+    /* Hero Banner (Glassmorphism) */
+    .hero {
+        width: 100%;
         text-align: center;
-        margin-bottom: -10px;
+        padding: 100px 20px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        margin-bottom: 40px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
-
-    /* Typing animation */
-    .typing {
-        width: 25ch;
-        white-space: nowrap;
-        overflow: hidden;
-        border-right: 3px solid orange;
-        font-size: 20px;
-        animation: typing 4s steps(30, end), blink .75s step-end infinite;
-        margin: auto;
-        text-align: center;
+    .hero h1 {
+        font-size: 3.5em;
+        margin: 0;
+        background: linear-gradient(45deg, #00c6ff, #0072ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: fadeIn 2s ease-in-out;
     }
-    @keyframes typing {
-        from { width: 0 }
-        to { width: 25ch }
+    .hero p {
+        font-size: 1.3em;
+        color: #eee;
+        margin-top: 15px;
+        animation: fadeIn 3s ease-in-out;
     }
-    @keyframes blink {
-        from, to { border-color: transparent }
-        50% { border-color: orange; }
+    @keyframes fadeIn {
+        from {opacity: 0;}
+        to {opacity: 1;}
     }
 
     /* Card Style */
     .card {
-        background: rgba(255,255,255,0.05);
-        border-radius: 15px;
-        padding: 25px;
-        margin: 10px;
-        transition: 0.3s;
+        border-radius: 15px; 
+        padding: 20px; 
+        margin: 10px; 
+        background: rgba(255,255,255,0.07); 
         box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+        transition: all 0.3s ease;
     }
     .card:hover {
         transform: scale(1.05);
-        box-shadow: 0 0 25px #00ffe5;
+        box-shadow: 0 0 20px #00ffe5;
     }
 
-    /* Run Button */
+    /* Run button */
     .run-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: bold;
-        text-decoration: none;
-        color: white;
         background: linear-gradient(45deg, #00c6ff, #0072ff);
-        transition: 0.4s;
+        color: white; 
+        border: none; 
+        padding: 10px 15px; 
+        border-radius: 8px; 
+        cursor: pointer; 
+        text-decoration: none;
+        font-weight: bold;
     }
     .run-btn:hover {
         background: linear-gradient(45deg, #ff6ec4, #7873f5);
-        box-shadow: 0 0 15px #ff6ec4;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# ---------------- PORTFOLIO HEADER ----------------
-st.markdown("<h1 class='main-title'>🚀 Vishal Kumar's Portfolio</h1>", unsafe_allow_html=True)
-st.markdown("<p class='typing'>Hi, I'm Vishal 👋 Passionate AI Specialist!</p>", unsafe_allow_html=True)
-st.write("")
+# -----------------------------
+# HERO SECTION
+# -----------------------------
+st.markdown(f"""
+    <div class="hero">
+        <h1>Hi, I'm Vishal 🚀</h1>
+        <p>AI Specialist • Developer • Streamlit Enthusiast</p>
+    </div>
+""", unsafe_allow_html=True)
 
-# ---------------- PROJECTS ----------------
-STREAMLIT_APPS = {
-    "All-Image-Type-To-JPEG": {
-        "description": "Convert any image format into JPEG seamlessly.",
-        "url": "https://your-app-link-1.streamlit.app"
-    },
-    "CGC-Project": {
-        "description": "CGC Project - AI-powered processing.",
-        "url": "https://your-app-link-2.streamlit.app"
-    },
-    "Match-CGC-files": {
-        "description": "Smart file matcher for CGC datasets.",
-        "url": "https://your-app-link-3.streamlit.app"
-    }
-}
+# -----------------------------
+# PROJECTS SECTION
+# -----------------------------
+st.markdown(f"<h2 style='text-align:center;'>{TITLE}</h2>", unsafe_allow_html=True)
+st.write(DESCRIPTION)
+st.markdown("---")
 
-cols = st.columns(len(STREAMLIT_APPS))
-for i, (name, app) in enumerate(STREAMLIT_APPS.items()):
-    with cols[i]:
-        st.markdown(f"""
-            <div class="card">
-                <h3>📁 {name}</h3>
-                <p>{app['description']}</p>
-                <a class="run-btn" href="{app['url']}" target="_blank">🚀 Run App</a>
-            </div>
-        """, unsafe_allow_html=True)
+if STREAMLIT_APPS:
+    for i, (name, details) in enumerate(STREAMLIT_APPS.items()):
+        if i % 3 == 0:
+            cols = st.columns(3)
+
+        col = cols[i % 3]
+        with col:
+            st.markdown(
+                f"""
+                <div class="card">
+                    <h3 style="margin:0;">📂 {name}</h3>
+                    <p style="color:#ddd;">{details['description']}</p>
+                    <a href="{details['url']}" target="_blank" class="run-btn">🚀 Run App</a>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+else:
+    st.warning("No Streamlit apps have been added yet.")
