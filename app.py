@@ -1,4 +1,5 @@
 import streamlit as st
+import base64
 
 # -----------------------------
 # SETTINGS
@@ -29,102 +30,44 @@ STREAMLIT_APPS = {
 st.set_page_config(page_title="Streamlit Portfolio", layout="wide")
 
 # -----------------------------
-# CUSTOM CSS (Background + Glass Banner + Cards)
+# BACKGROUND VIDEO
 # -----------------------------
-st.markdown("""
-    <style>
-    /* Gradient background */
-    body {
-        background: linear-gradient(135deg, #1e1e2f, #2c3e50, #34495e, #1c1c1c);
-        background-size: 400% 400%;
-        animation: gradientBG 15s ease infinite;
-        color: white;
-    }
-    @keyframes gradientBG {
-        0% {background-position: 0% 50%;}
-        50% {background-position: 100% 50%;}
-        100% {background-position: 0% 50%;}
-    }
+def get_video_base64(video_file):
+    with open(video_file, "rb") as file:
+        data = file.read()
+    return base64.b64encode(data).decode()
 
-    /* Hero Banner (Glassmorphism) */
-    .hero {
-        width: 100%;
-        text-align: center;
-        padding: 100px 20px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 20px;
-        margin-bottom: 40px;
-        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-    }
-    .hero h1 {
-        font-size: 3.5em;
-        margin: 0;
-        background: linear-gradient(45deg, #00c6ff, #0072ff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        animation: fadeIn 2s ease-in-out;
-    }
-    .hero p {
-        font-size: 1.3em;
-        color: #eee;
-        margin-top: 15px;
-        animation: fadeIn 3s ease-in-out;
-    }
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
+VIDEO_PATH = "bg.mp4"   # make sure bg.mp4 is in the same folder
+VIDEO_BASE64 = get_video_base64(VIDEO_PATH)
 
-    /* Card Style */
-    .card {
-        border-radius: 15px; 
-        padding: 20px; 
-        margin: 10px; 
-        background: rgba(255,255,255,0.07); 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-        transition: all 0.3s ease;
-    }
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px #00ffe5;
-    }
-
-    /* Run button */
-    .run-btn {
-        background: linear-gradient(45deg, #00c6ff, #0072ff);
-        color: white; 
-        border: none; 
-        padding: 10px 15px; 
-        border-radius: 8px; 
-        cursor: pointer; 
-        text-decoration: none;
-        font-weight: bold;
-    }
-    .run-btn:hover {
-        background: linear-gradient(45deg, #ff6ec4, #7873f5);
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# -----------------------------
-# HERO SECTION
-# -----------------------------
 st.markdown(f"""
-    <div class="hero">
-        <h1>Hi, I'm Vishal 🚀</h1>
-        <p>AI Specialist • Developer • Streamlit Enthusiast</p>
-    </div>
+    <style>
+    .video-bg {{
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%; 
+        min-height: 100%;
+        z-index: -1;
+        object-fit: cover;
+    }}
+    </style>
+
+    <video autoplay muted loop class="video-bg">
+        <source src="data:video/mp4;base64,{VIDEO_BASE64}" type="video/mp4">
+    </video>
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# PROJECTS SECTION
+# HEADER
 # -----------------------------
-st.markdown(f"<h2 style='text-align:center;'>{TITLE}</h2>", unsafe_allow_html=True)
+st.title(TITLE)
 st.write(DESCRIPTION)
 st.markdown("---")
 
+# -----------------------------
+# DISPLAY PROJECTS
+# -----------------------------
 if STREAMLIT_APPS:
     for i, (name, details) in enumerate(STREAMLIT_APPS.items()):
         if i % 3 == 0:
@@ -134,10 +77,18 @@ if STREAMLIT_APPS:
         with col:
             st.markdown(
                 f"""
-                <div class="card">
+                <div style="border-radius:15px; padding:20px; margin:10px; 
+                            background-color:rgba(248, 249, 250, 0.85); 
+                            box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
                     <h3 style="margin:0;">📂 {name}</h3>
-                    <p style="color:#ddd;">{details['description']}</p>
-                    <a href="{details['url']}" target="_blank" class="run-btn">🚀 Run App</a>
+                    <p style="color:#333;">{details['description']}</p>
+                    <a href="{details['url']}" target="_blank" style="text-decoration:none;">
+                        <button style="background: linear-gradient(90deg, #2196F3, #21CBF3); 
+                                       color:white; border:none; 
+                                       padding:10px 15px; border-radius:8px; cursor:pointer; margin-top:8px;">
+                            🚀 Run App
+                        </button>
+                    </a>
                 </div>
                 """,
                 unsafe_allow_html=True
