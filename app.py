@@ -51,6 +51,41 @@ st.markdown(f"""
         z-index: -1;
         object-fit: cover;
     }}
+
+    /* Card Animation */
+    .card {{
+        border-radius:15px;
+        padding:20px;
+        margin:10px;
+        background-color:rgba(248, 249, 250, 0.85);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        animation: fadeIn 1s ease-in-out;
+    }}
+    .card:hover {{
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }}
+
+    /* Fade-in animation */
+    @keyframes fadeIn {{
+        from {{ opacity: 0; transform: translateY(20px); }}
+        to {{ opacity: 1; transform: translateY(0); }}
+    }}
+
+    .run-btn {{
+        background: linear-gradient(90deg, #2196F3, #21CBF3);
+        color:white;
+        border:none;
+        padding:10px 15px;
+        border-radius:8px;
+        cursor:pointer;
+        margin-top:8px;
+        transition: background 0.3s ease;
+    }}
+    .run-btn:hover {{
+        background: linear-gradient(90deg, #1e88e5, #00acc1);
+    }}
     </style>
 
     <video autoplay muted loop class="video-bg">
@@ -77,17 +112,11 @@ if STREAMLIT_APPS:
         with col:
             st.markdown(
                 f"""
-                <div style="border-radius:15px; padding:20px; margin:10px; 
-                            background-color:rgba(248, 249, 250, 0.85); 
-                            box-shadow: 0 4px 8px rgba(0,0,0,0.3);">
+                <div class="card">
                     <h3 style="margin:0;">📂 {name}</h3>
                     <p style="color:#333;">{details['description']}</p>
                     <a href="{details['url']}" target="_blank" style="text-decoration:none;">
-                        <button style="background: linear-gradient(90deg, #2196F3, #21CBF3); 
-                                       color:white; border:none; 
-                                       padding:10px 15px; border-radius:8px; cursor:pointer; margin-top:8px;">
-                            🚀 Run App
-                        </button>
+                        <button class="run-btn">🚀 Run App</button>
                     </a>
                 </div>
                 """,
