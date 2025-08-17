@@ -10,9 +10,9 @@ DESCRIPTION = "Hi, I'm Vishal 👋 A passionate developer and AI specialist. Exp
 
 # ✅ Manually map repos to Streamlit app links (deploy on Streamlit Cloud first)
 STREAMLIT_APPS = {
-    "📦 ZIP → JPG Converter": "https://all-image-type-to-jpeg-hgvbtewplye9h67bdq77kw.streamlit.app/",
-    "Image Similarity Clustering App": "https://psldcqtszimyzo8nucxxbm.streamlit.app/",
-    "File Comparison Tool": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
+    "All-Image-Type-To-JPEG": "https://all-image-type-to-jpeg-hgvbtewplye9h67bdq77kw.streamlit.app/",
+    "Cluster-according-looking-wise": "https://psldcqtszimyzo8nucxxbm.streamlit.app/",
+    "Match-CGC-files": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
     # Add more if needed...
 }
 
