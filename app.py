@@ -4,9 +4,16 @@ import requests
 # -----------------------------
 # SETTINGS
 # -----------------------------
-USERNAME = "vishalk99vk"  # change this
+USERNAME = "vishalk99vk"  # <-- change this
 TITLE = "🚀 My GitHub Portfolio"
-DESCRIPTION = "A showcase of my GitHub repositories, projects, and contributions."
+DESCRIPTION = "Hi, I'm Vishal 👋 A passionate developer and AI specialist. Explore my GitHub projects below."
+
+# ✅ Manually map repos to Streamlit app links (deploy on Streamlit Cloud first)
+STREAMLIT_APPS = {
+    "repo-name-1": "https://repo-name-1.streamlit.app",
+    "repo-name-2": "https://repo-name-2.streamlit.app",
+    # Add more if needed...
+}
 
 # -----------------------------
 # STREAMLIT CONFIG
@@ -65,11 +72,14 @@ if response.status_code == 200:
             cols = st.columns(3)
             for col, repo in zip(cols, repos[i:i+3]):
                 with col:
+                    repo_name = repo['name']
+                    app_link = STREAMLIT_APPS.get(repo_name, None)  # check if app link exists
+
                     st.markdown(
                         f"""
                         <div style="border-radius:15px; padding:20px; margin:10px; 
                                     background-color:#f8f9fa; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-                            <h3 style="margin:0;">📂 {repo['name']}</h3>
+                            <h3 style="margin:0;">📂 {repo_name}</h3>
                             <p style="color:#555;">{repo['description'] if repo['description'] else 'No description available'}</p>
                             <p>
                                 ⭐ {repo['stargazers_count']} &nbsp;&nbsp; 
@@ -82,10 +92,26 @@ if response.status_code == 200:
                                     🔗 View Repo
                                 </button>
                             </a>
-                        </div>
                         """,
                         unsafe_allow_html=True
                     )
+
+                    # Show "Run App" button only if mapped
+                    if app_link:
+                        st.markdown(
+                            f"""
+                            <a href="{app_link}" target="_blank" style="text-decoration:none;">
+                                <button style="background-color:#2196F3; color:white; border:none; 
+                                               padding:10px 15px; border-radius:8px; cursor:pointer; margin-top:8px;">
+                                    🚀 Run App
+                                </button>
+                            </a>
+                            """,
+                            unsafe_allow_html=True
+                        )
+
+                    st.markdown("</div>", unsafe_allow_html=True)
+
     else:
         st.warning("No repositories found for the selected filters.")
 else:
