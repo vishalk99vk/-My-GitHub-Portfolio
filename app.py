@@ -20,6 +20,9 @@ STREAMLIT_APPS = {
         "url": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
         "description": "Smart file matcher for CGC datasets."
     },
+    "Take-all-images-from-different-folder-to-a-folder":{
+        "url": "https://take-all-images-from-different-folder-to-a-folder-3vmpmkvlj2tf.streamlit.app/",
+        "description": "Take-all-images-from-different-folder-to-a-folder."
     # Add more here...
 }
 
