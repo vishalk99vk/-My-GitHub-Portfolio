@@ -20,13 +20,10 @@ STREAMLIT_APPS = {
         "url": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
         "description": "Smart file matcher for CGC datasets."
     },
-    "Take-all-images-from-different-folder-to-a-folder":{
+    "Take-all-images-from-different-folder-to-a-folder": {
         "url": "https://take-all-images-from-different-folder-to-a-folder-3vmpmkvlj2tf.streamlit.app/",
-        "description": "Take-all-images-from-different-folder-to-a-folder."
-        },
-    "take-all-images-from-different-folder-to-a-folder": {
-        "url": "https://match-cgc-files-ms69djbyyeaaw5g9wnnzdq.streamlit.app/",
-        "description": "take-all-images-from-different-folder-to-a-folder."
+        "description": "Merge all images from different folders into one."
+    }
     # Add more here...
 }
 
@@ -133,21 +130,22 @@ st.write(DESCRIPTION)
 st.markdown("---")
 
 if STREAMLIT_APPS:
-    for i, (name, details) in enumerate(STREAMLIT_APPS.items()):
-        if i % 3 == 0:
-            cols = st.columns(3)
-
-        col = cols[i % 3]
-        with col:
-            st.markdown(
-                f"""
-                <div class="card">
-                    <h3 style="margin:0;">📂 {name}</h3>
-                    <p style="color:#ddd;">{details['description']}</p>
-                    <a href="{details['url']}" target="_blank" class="run-btn">🚀 Run App</a>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+    apps = list(STREAMLIT_APPS.items())
+    for i in range(0, len(apps), 3):
+        cols = st.columns(3)
+        for j in range(3):
+            if i + j < len(apps):
+                name, details = apps[i + j]
+                with cols[j]:
+                    st.markdown(
+                        f"""
+                        <div class="card">
+                            <h3 style="margin:0;">📂 {name}</h3>
+                            <p style="color:#ddd;">{details['description']}</p>
+                            <a href="{details['url']}" target="_blank" class="run-btn">🚀 Run App</a>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 else:
     st.warning("No Streamlit apps have been added yet.")
